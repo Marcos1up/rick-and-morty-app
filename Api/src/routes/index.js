@@ -1,7 +1,10 @@
 const { Router } = require("express");
+const {
+    getAllCharacter,
+} = require("../controllers/getController/getAllCharacter");
 
 const router = Router();
 
-// Configurar los routers
+router.get("/characters", getAllCharacter);
 
 module.exports = router;

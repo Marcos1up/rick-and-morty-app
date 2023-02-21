@@ -1,12 +1,11 @@
 const axios = require("axios");
-//const Character = require("../models/Character");
 
-async function allCharactersApi(req, res) {
+async function allCharactersApi() {
     const url = "https://rickandmortyapi.com/api/character";
     try {
-        let allCharacters = (await axios.get(url)).data.results;
+        const response = await axios.get(url);
 
-        allCharacters = allCharacters.map((e) => {
+        let allCharacters = response.data.results.map((e) => {
             return {
                 id: e.id,
                 name: e.name,
@@ -17,11 +16,13 @@ async function allCharactersApi(req, res) {
             };
         });
 
-        allCharacters.length
-            ? res.status(200).send(allCharacters)
-            : res.status(400).send({
-                  message: "Error al conectarse con la API",
-              });
+        if (!allCharacters.length) {
+            throw new Error(
+                "Error al realizar el llamado de characters a la API"
+            );
+        }
+
+        return allCharacters;
     } catch (error) {
         console.error({ message: error.message }, error);
     }
