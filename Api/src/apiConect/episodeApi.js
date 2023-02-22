@@ -9,6 +9,8 @@ async function allEpisodesApi() {
             return {
                 id: e.id,
                 name: e.name,
+                date: e.air_date,
+                characters: e.characters,
             };
         });
 

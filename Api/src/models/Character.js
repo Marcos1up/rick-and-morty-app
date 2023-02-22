@@ -5,6 +5,7 @@ const characterSchema = new Schema(
     {
         id: Number,
         name: String,
+        image: String,
         species: String,
         origin: String,
         created: String,
@@ -12,5 +13,5 @@ const characterSchema = new Schema(
     { timestamps: true }
 );
 
-const Character = mongoose.model("User", characterSchema);
+const Character = mongoose.model("Character", characterSchema);
 module.exports = Character;
