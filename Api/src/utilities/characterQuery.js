@@ -1,17 +1,30 @@
-async function characterQuery(data, allCharacters) {
-    if (!allCharacters.length) {
-        throw new Error("No se encontraron personajes en la API.");
+const Character = require("../models/Character");
+const DbCharacter = require("../models/dbCharacter");
+
+async function characterQuery(name) {
+    try {
+        const apiCharacters = await Character.find({
+            name: { $regex: name, $options: "i" }, //expresión regular para que la búsqueda no sea sensible a mayúsculas y minúsculas
+        });
+        const createdCharacters = await DbCharacter.find({
+            name: { $regex: name, $options: "i" },
+        });
+
+        const allCharacters = [...createdCharacters, ...apiCharacters];
+
+        if (!allCharacters.length) {
+            throw new Error(
+                "No se encontraron personajes que coincidan con el nombre proporcionado."
+            );
+        }
+
+        return allCharacters;
+    } catch (error) {
+        console.error(error);
+        throw new Error("Ocurrió un error inesperado al buscar el personaje.");
     }
-
-    const result = allCharacters.filter((e) =>
-        e.name.toLowerCase().includes(data.toLowerCase())
-    );
-
-    if (!result.length) {
-        throw new Error(`No se encontraron personajes que contengan: ${data}`);
-    }
-
-    return result;
 }
 
-module.exports = { characterQuery };
+module.exports = {
+    characterQuery,
+};

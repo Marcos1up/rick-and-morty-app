@@ -1,4 +1,6 @@
-const { allCharactersApi } = require("../apiConect/characterApi");
+const {
+    allCharactersApi,
+} = require("../connections/apiToDbConnect/dbAllCharacter");
 
 async function characterById(data) {
     const allCharacters = await allCharactersApi();

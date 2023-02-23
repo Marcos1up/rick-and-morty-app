@@ -1,9 +1,8 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const CharacterSchema = new Schema(
+const dbCharacterSchema = new Schema(
     {
-        id: Number,
         name: String,
         image: String,
         species: String,
@@ -13,5 +12,5 @@ const CharacterSchema = new Schema(
     { timestamps: true }
 );
 
-const Character = mongoose.model("Character", CharacterSchema);
-module.exports = Character;
+const dbCharacter = mongoose.model("dbCharacter", dbCharacterSchema);
+module.exports = dbCharacter;

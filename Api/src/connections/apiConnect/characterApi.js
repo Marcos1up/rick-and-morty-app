@@ -18,7 +18,7 @@ async function allCharactersApi() {
 
         if (!allCharacters.length) {
             throw new Error(
-                "Error al realizar el llamado de characters a la API"
+                "Error al realizar el llamado de characters a la API."
             );
         }
 

@@ -1,20 +1,18 @@
-const Character = require("../models/Character");
+const dbCharacter = require("../models/dbCharacter");
 
 async function createCharacter(data) {
     try {
-        const newCharacter = new Character();
+        const newCharacter = new dbCharacter();
 
         if (!data) {
             throw new Error(
                 "Error al subir el personaje a la DB. Verifique que la informacion ingresada sea correcta."
             );
         } else {
-            newCharacter.id = data.id;
             newCharacter.name = data.name;
             newCharacter.image = data.image;
             newCharacter.species = data.species;
             newCharacter.origin = data.origin;
-            newCharacter.created = data.created;
 
             newCharacter.save();
             return newCharacter;

@@ -1,4 +1,4 @@
-const { allEpisodesApi } = require("../../apiConect/episodeApi");
+const { allEpisodesApi } = require("../../connections/apiConnect/episodeApi");
 
 async function getAllEpisodes(req, res) {
     try {
