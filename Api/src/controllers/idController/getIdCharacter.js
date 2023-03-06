@@ -1,19 +1,27 @@
-const { characterById } = require("../../utilities/characterById");
+//const { characterById } = require("../../utilities/characterById");
+const Character = require("../../models/Character");
+const dbCharacter = require("../../models/dbCharacter");
 
 async function getCharacterById(req, res) {
-    const id = req.params.id;
     try {
-        const filtered = await characterById(id);
+        const characterId = req.params.id;
+        const character = await Character.findById(characterId);
+        const dbCharacters = await dbCharacter.findById(characterId);
 
-        filtered
-            ? res.status(200).send(filtered)
-            : res.status(400).send({
-                  message:
-                      "No se pudo encontrar el personaje con el ID proporcionado",
-              });
+        if (!character && !dbCharacters) {
+            return res.status(404).send({
+                message: `No se encontró el personaje con el id ${characterId}`,
+            });
+        }
+
+        return res.status(200).send({
+            character: character || dbCharacters,
+        });
     } catch (error) {
-        console.error({ message: error.message }, error);
-        res.status(500).send(error.message);
+        console.error(`${error.name}: ${error.message}`);
+        return res.status(500).send({
+            message: "Ocurrió un error al obtener el personaje por ID",
+        });
     }
 }
 
